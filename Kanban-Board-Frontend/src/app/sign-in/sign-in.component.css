@@ -1,0 +1,188 @@
+/* Navbar Styles */
+.navbar {
+
+  background: #14247a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  top: -20px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px; /* Add padding for better spacing */
+  font-family: 'Verdana', sans-serif;
+  height: 110px;
+  animation: slideDown 0.5s ease; /* Animation */
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.navbar-brand {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  font-weight: bold;
+  align-items: center;
+}
+
+.navbar-brand img {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+a {
+  padding: 20px;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #ff5722; /* Orange */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: 'Verdana', sans-serif;
+  cursor: pointer;
+  margin-right: 30px;
+
+}
+
+button:hover {
+  background-color: #f4511e; /* Darker Orange */
+}
+
+/* Apply styles to the navbar items */
+.navbar-nav {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+}
+
+/* Apply styles to the navbar links */
+.nav-link {
+  text-decoration: none;
+  color: white;
+  padding: 5px 10px;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin-top: 50px;
+  position: relative;
+  background-color: #87ceeb; /* Sky Blue */
+  max-width: 100%;
+  font-family: 'Verdana', sans-serif;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.login-illustration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.login-illustration img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6; /* Adjust opacity as needed */
+}
+
+.animated-form {
+  width: 400px; /* Increase width */
+  height: auto; /* Adjust height as needed */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); /* Add shadow */
+  background-color: #cfd8dc; /* Light Grey */
+  z-index: 1;
+  position: relative;
+  font-family: 'Verdana', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #ff5722; /* Orange */
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-family: 'Verdana', sans-serif;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  font-family: 'Verdana', sans-serif;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: 'Verdana', sans-serif;
+}
+
+div button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff5722; /* Orange */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Verdana', sans-serif;
+}
+
+.alert {
+  margin-bottom: 20px;
+  
+}
+
+.alert-danger {
+  color: red; /* Set text color to red */
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  padding: 0; /* Remove padding */
+  font-family: 'Verdana', sans-serif;
+}
+
+#signup {
+  font-weight: 500;
+  color: #ff5722; /* Orange */
+}
+
+span {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+a {
+  color: white;
+  
+}

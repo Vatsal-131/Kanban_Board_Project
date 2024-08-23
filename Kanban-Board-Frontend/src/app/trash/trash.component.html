@@ -1,0 +1,71 @@
+<body>
+  <nav class="navbar">
+  <a routerLink="/dashboard" class="navbar-brand">
+    <img src="assets\logo.jpg" alt="Logo">
+    BoardifyNow
+  </a>
+  <div class="navbar-actions">
+    <div class="dropdown">
+      <span *ngIf="firstName" class="navbar-firstname dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img *ngIf="profilePic" [src]="profilePic" alt="Profile Picture" class="profile-pic"> Hi {{ firstName }}
+      </span>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <ul class="my-list">
+          <li routerLink="/userdetails">
+            <mat-icon class="icon">account_circle</mat-icon> <!-- Profile Icon -->
+            <a routerLink="/userdetails">User Info</a>
+          </li>
+          <li (click)="logout()">
+            <mat-icon class="icon" (click)="logout()">power_settings_new</mat-icon> <!-- Power Icon -->
+            <span (click)="logout()">Logout</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+ 
+  <div class="table-container">
+  <ng-container *ngIf="deletedTasks.length > 0; else emptyTrash">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Task ID</th>
+          <th>Task Name</th>
+          <th>Board ID</th>
+          <th>User ID</th>
+          <th>Description</th>
+          <th>Deadline</th>
+          <th>Assignee Email</th>
+          <th>Initial State</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of deletedTasks">
+          <td>{{ task.taskId }}</td>
+          <td>{{ task.taskName }}</td>
+          <td>{{ task.boardId }}</td>
+          <td>{{ task.userId }}</td>
+          <td>{{ task.taskDescription }}</td>
+          <td>{{ task.taskDeadline }}</td>
+          <td>{{ task.assigneeEmail }}</td>
+          <td>{{ task.initialState }}</td>
+          <td>
+            <button (click)="restoreTask(task.taskId, task.taskName)">Restore</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </ng-container>
+  </div>
+  <ng-template #emptyTrash>
+    <p>No tasks in the trash.</p>
+  </ng-template>
+  <button routerLink="/dashboard" class="btn-danger">Back</button>
+</div>
+
+</body><app-footer></app-footer>

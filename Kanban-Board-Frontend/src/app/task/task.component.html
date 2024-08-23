@@ -1,0 +1,399 @@
+<div class="container">
+  <!-- To Do Column -->
+  <div class="column" (drop)="drop('todo', $event)" (dragover)="allowDrop($event)" style="background-color: rgb(255, 196, 87); ">
+    <h2>To Do <i class="fas fa-plus" (click)="toggleCreateTaskForm('todo')" title="Create Task"></i></h2>
+  
+
+    <div class="tasks" *ngIf="getTasksByState('todo').length > 0">
+     <div class="task-item" *ngFor="let task of getTasksByState('todo')">
+       <div class="draggable" draggable="true" (dragstart)="drag(task, $event)">
+         <div *ngIf="task.initialState === 'todo'" >
+          <div class="task-info">
+            
+            <div class="task-name" title="Name" style="cursor:text;"><strong>{{ task.taskName }}</strong></div>
+            <div class="task-description" title="Description" style="cursor:text;">{{ task.taskDescription }}</div>
+            <div class="assignee">
+              <div>
+                <i class="fas fa-user toggle-icon" (click)="toggleAssigneeDetails()" title="Assignee"></i>
+              </div>
+              <div *ngIf="showAssigneeDetails"  title="Assignee" style="cursor:text;">{{ task.assigneeEmail }}</div>
+            </div>
+            <div class="deadline">
+              <div>
+                <i class="far fa-calendar-alt toggle-icon" (click)="toggleDeadlineDetails()" title="Deadline"></i>
+              </div>
+              <div *ngIf="showDeadlineDetails" title="Deadline" style="cursor:text;">{{ task.taskDeadline }}</div>
+            </div>
+          </div>
+          
+          
+           <div class="task-actions">
+             <span class="tick-icon" title="Task Completed" (click)="completeTask(task)">&#10004;</span>
+             <span (click)="editTask(task)" class="edit-icon" title="Edit Task">
+               <i class="fas fa-edit"></i>
+             </span>
+             <span (click)="deleteTask(task.taskId)" class="delete-icon" title="Delete Task">
+               <i class="fas fa-trash-alt"></i>
+             </span>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div *ngIf="showCreateTaskForm && currentState === 'todo' " class="modal-overlay custom-modal-overlay">
+    <div class="task-modal">
+      <!-- Create task form for "To Do" state -->
+      <form #taskForm="ngForm" (submit)="createTask('todo', boardId ?? '') "style= "background-color: rgb(255, 196, 87); ">
+        <div class="task-info">
+          <label for="taskName">Task Name:</label>
+          <input type="text" id="taskName" name="taskName" [(ngModel)]="taskName" required #taskNameInput="ngModel">
+          <div *ngIf="taskNameInput.invalid && (taskNameInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Task Name is required.
+          </div>
+          
+          <label for="taskDescription">Task Description:</label>
+          <input type="text" id="taskDescription" name="taskDescription" [(ngModel)]="taskDescription" required #taskDescriptionInput="ngModel">
+          <div *ngIf="taskDescriptionInput.invalid && (taskDescriptionInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Task Description is required.
+          </div>
+          
+          <label for="taskDeadline">Deadline:</label>
+          <input type="date" id="taskDeadline" name="taskDeadline" [(ngModel)]="taskDeadline" required [min]="minDate()" #taskDeadlineInput="ngModel">
+          <div *ngIf="taskDeadlineInput.invalid && (taskDeadlineInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Deadline is required and must be after today.
+          </div>
+          
+          
+<label for="assigneeEmail">Assignee Email:</label>
+<input type="text" id="assigneeEmail" name="assigneeEmail" [(ngModel)]="assigneeEmail" required #assigneeEmailInput="ngModel">
+<div *ngIf="assigneeEmailInput.invalid && (assigneeEmailInput.dirty || taskForm.submitted)" class="error">
+<span class="mandatory-symbol">*</span> Assignee Email is required.
+</div>
+
+        </div>
+        <button type="submit" class="create-btn">Create</button>
+        <button type="button" (click)="cancelCreateTask()" class="cancel-btn">Cancel</button>
+      </form>
+      </div>
+  </div>
+  
+   <!-- Update form for tasks in the "To Do" column -->
+   <div class="task-modal" *ngIf="selectedTask && selectedTask.initialState === 'todo' ">
+     <form (submit)="updateTask(selectedTask)" style="background-color: rgb(255, 196, 87); ">
+       <div class="task-info">
+         <label for="editTaskName">Task Name:</label>
+         <input type="text" id="editTaskName" name="editTaskName" [(ngModel)]="selectedTask.taskName" required #editTaskNameInput="ngModel">
+         <div *ngIf="editTaskNameInput.invalid && (editTaskNameInput.dirty || editTaskNameInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Task Name is required.
+         </div>
+         
+         <label for="editTaskDescription">Task Description:</label>
+         <input type="text" id="editTaskDescription" name="editTaskDescription" [(ngModel)]="selectedTask.taskDescription" required #editTaskDescriptionInput="ngModel">
+         <div *ngIf="editTaskDescriptionInput.invalid && (editTaskDescriptionInput.dirty || editTaskDescriptionInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Task Description is required.
+         </div>
+         
+         <label for="editTaskDeadline">Deadline:</label>
+         <input type="date" id="editTaskDeadline" name="editTaskDeadline" [(ngModel)]="taskDeadline" required [min]="minDate()" #taskDeadlineInput="ngModel">
+         <div *ngIf="taskDeadlineInput.invalid && (taskDeadlineInput.dirty || taskDeadlineInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Deadline is required and must be after today.
+         </div>
+         
+         
+         <label for="editAssigneeEmail">Assignee Email:</label>
+         <input type="text" id="editAssigneeEmail" name="editAssigneeEmail" [(ngModel)]="selectedTask.assigneeEmail">
+       </div>
+       <button type="submit" class="cancel-btn">Update</button>
+         <button type="button" (click)="cancelEditTask()" class="cancel-btn">Cancel</button>
+     </form>
+   </div>
+ </div>
+ 
+ <!-- In Progress Column -->
+ <div class="column" (drop)="drop('inprogress', $event)" (dragover)="allowDrop($event)" style=" background-color: rgb(156, 223, 156); ">
+  <h2>In Progress 
+    <i class="fas fa-plus" (click)="toggleCreateTaskForm('inprogress')" title="Create Task"></i>
+  </h2>
+  
+   <div class="tasks" *ngIf="getTasksByState('inprogress').length > 0">
+     <div class="task-item" *ngFor="let task of getTasksByState('inprogress')">
+       <div class="draggable" draggable="true" (dragstart)="drag(task, $event)">
+         <div *ngIf="task.initialState === 'inprogress'">
+          <div class="task-info">
+            <div class="task-name" title="Name" style="cursor:text;"><strong>{{ task.taskName }}</strong></div>
+            <div class="task-description" title="Description" style="cursor:text;">{{ task.taskDescription }}</div>
+            <div class="assignee">
+              <div>
+                <i class="fas fa-user toggle-icon" (click)="toggleAssigneeDetails()" title="Assignee"></i>
+              </div>
+              <div *ngIf="showAssigneeDetails"  title="Assignee" style="cursor:text;">{{ task.assigneeEmail }}</div>
+            </div>
+            <div class="deadline">
+              <div>
+                <i class="far fa-calendar-alt toggle-icon" (click)="toggleDeadlineDetails()" title="Deadline"></i>
+              </div>
+              <div *ngIf="showDeadlineDetails" title="Deadline" style="cursor:text;">{{ task.taskDeadline }}</div>
+            </div>
+          </div>
+           <div class="task-actions">
+             <span class="tick-icon" title="Task Completed" (click)="completeTask(task)">&#10004;</span>
+             <span (click)="editTask(task)" class="edit-icon" title="Edit Task">
+               <i class="fas fa-edit"></i>
+             </span>
+             
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div *ngIf="showCreateTaskForm && currentState === 'inprogress'" class="modal-overlay">
+     <div class="task-modal">
+       <!-- Create task form for "In Progress" state -->
+   
+        <form #taskForm="ngForm" (submit)="createTask('inprogress', boardId ?? '')" style=" background-color: rgb(156, 223, 156); ">
+          <div class="task-info">
+            <label for="taskName">Task Name:</label>
+            <input type="text" id="taskName" name="taskName" [(ngModel)]="taskName" required #taskNameInput="ngModel">
+            <div *ngIf="taskNameInput.invalid && (taskNameInput.dirty || taskForm.submitted)" class="error">
+              <span class="mandatory-symbol">*</span> Task Name is required.
+            </div>
+            
+            <label for="taskDescription">Task Description:</label>
+            <input type="text" id="taskDescription" name="taskDescription" [(ngModel)]="taskDescription" required #taskDescriptionInput="ngModel">
+            <div *ngIf="taskDescriptionInput.invalid && (taskDescriptionInput.dirty || taskForm.submitted)" class="error">
+              <span class="mandatory-symbol">*</span> Task Description is required.
+            </div>
+            
+            <label for="taskDeadline">Deadline:</label>
+            <input type="date" id="taskDeadline" name="taskDeadline" [(ngModel)]="taskDeadline" required [min]="minDate()" #taskDeadlineInput="ngModel">
+            <div *ngIf="taskDeadlineInput.invalid && (taskDeadlineInput.dirty || taskForm.submitted)" class="error">
+              <span class="mandatory-symbol">*</span> Deadline is required and must be after today.
+            </div>
+            
+            
+<label for="assigneeEmail">Assignee Email:</label>
+<input type="text" id="assigneeEmail" name="assigneeEmail" [(ngModel)]="assigneeEmail" required #assigneeEmailInput="ngModel">
+<div *ngIf="assigneeEmailInput.invalid && (assigneeEmailInput.dirty || taskForm.submitted)" class="error">
+  <span class="mandatory-symbol">*</span> Assignee Email is required.
+</div>
+
+
+          </div>
+          <button type="submit" class="create-btn">Create</button>
+          <button type="button" (click)="cancelCreateTask()" class="cancel-btn">Cancel</button>
+        </form>
+        
+     </div>
+   </div>
+   
+   <!-- Update form for tasks in the "In Progress" column -->
+   <div class="task-modal" *ngIf="selectedTask && selectedTask.initialState === 'inprogress'">
+     <form (submit)="updateTask(selectedTask)" style=" background-color: rgb(156, 223, 156); ">
+       <div class="task-info">
+         <label for="editTaskName">Task Name:</label>
+         <input type="text" id="editTaskName" name="editTaskName" [(ngModel)]="selectedTask.taskName" required #editTaskNameInput="ngModel">
+         <div *ngIf="editTaskNameInput.invalid && (editTaskNameInput.dirty || editTaskNameInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Task Name is required.
+         </div>
+         
+         <label for="editTaskDescription">Task Description:</label>
+         <input type="text" id="editTaskDescription" name="editTaskDescription" [(ngModel)]="selectedTask.taskDescription" required #editTaskDescriptionInput="ngModel">
+         <div *ngIf="editTaskDescriptionInput.invalid && (editTaskDescriptionInput.dirty || editTaskDescriptionInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Task Description is required.
+         </div>
+         
+         <label for="editTaskDeadline">Deadline:</label>
+         <input type="date" id="editTaskDeadline" name="editTaskDeadline" [(ngModel)]="taskDeadline" required [min]="minDate()" #taskDeadlineInput="ngModel">
+         <div *ngIf="taskDeadlineInput.invalid && (taskDeadlineInput.dirty || taskDeadlineInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Deadline is required and must be after today.
+         </div>
+         
+       
+         <label for="editAssigneeEmail">Assignee Email:</label>
+         <input type="text" id="editAssigneeEmail" name="editAssigneeEmail" [(ngModel)]="selectedTask.assigneeEmail">
+       </div>
+       <button type="submit" class="cancel-btn">Update</button>
+         <button type="button" (click)="cancelEditTask()" class="cancel-btn">Cancel</button>
+     </form>
+   </div>
+ </div>
+ 
+  <!-- Completed Column -->
+ <div class="column" (drop)="drop('completed', $event)" (dragover)="allowDrop($event)" style=" background-color: rgb(155, 210, 255);  ">
+  <h2>Completed 
+    <i class="fas fa-plus" (click)="toggleCreateTaskForm('completed')" title="Create Task"></i>
+  </h2>
+  
+   <div class="tasks" *ngIf="getTasksByState('completed').length > 0">
+     <div class="task-item" *ngFor="let task of getTasksByState('completed')">
+       <div class="draggable" draggable="true" (dragstart)="drag(task, $event)">
+         <div *ngIf="task.initialState === 'completed'">
+          <div class="task-info">
+            <div class="task-name" title="Name" style="cursor:text;"><strong>{{ task.taskName }}</strong></div>
+            <div class="task-description" title="Description" style="cursor:text;">{{ task.taskDescription }}</div>
+            <div class="assignee">
+              <div>
+                <i class="fas fa-user toggle-icon" (click)="toggleAssigneeDetails()" title="Assignee"></i>
+              </div>
+              <div *ngIf="showAssigneeDetails"  title="Assignee" style="cursor:text;">{{ task.assigneeEmail }}</div>
+            </div>
+            <div class="deadline">
+              <div>
+                <i class="far fa-calendar-alt toggle-icon" (click)="toggleDeadlineDetails()" title="Deadline"></i>
+              </div>
+              <div *ngIf="showDeadlineDetails" title="Deadline" style="cursor:text;">{{ task.taskDeadline }}</div>
+            </div>
+          </div>
+           <div class="task-actions">
+             <span class="tick-icon" title="Task Completed" (click)="completeTask(task)">&#10004;</span>
+             <span (click)="editTask(task)" class="edit-icon" title="Edit Task">
+               <i class="fas fa-edit"></i>
+             </span>
+             <span (click)="deleteTask(task.taskId)" class="delete-icon" title="Delete Task">
+               <i class="fas fa-trash-alt"></i>
+             </span>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div *ngIf="showCreateTaskForm && currentState === 'completed'" class="modal-overlay">
+     <div class="task-modal">
+       <!-- Create task form for "Completed" state -->
+      
+       <form #taskForm="ngForm" (submit)="createTask('completed', boardId ?? '')" style=" background-color: rgb(155, 210, 255);  ">
+        <div class="task-info">
+          <label for="taskName">Task Name:</label>
+          <input type="text" id="taskName" name="taskName" [(ngModel)]="taskName" required #taskNameInput="ngModel">
+          <div *ngIf="taskNameInput.invalid && (taskNameInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Task Name is required.
+          </div>
+          
+          <label for="taskDescription">Task Description:</label>
+          <input type="text" id="taskDescription" name="taskDescription" [(ngModel)]="taskDescription" required #taskDescriptionInput="ngModel">
+          <div *ngIf="taskDescriptionInput.invalid && (taskDescriptionInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Task Description is required.
+          </div>
+          
+          <label for="taskDeadline">Deadline:</label>
+          <input type="date" id="taskDeadline" name="taskDeadline" [(ngModel)]="taskDeadline" required [min]="minDate()" #taskDeadlineInput="ngModel">
+          <div *ngIf="taskDeadlineInput.invalid && (taskDeadlineInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Deadline is required and must be after today.
+          </div>
+          
+          
+
+<label for="assigneeEmail">Assignee Email:</label>
+<input type="text" id="assigneeEmail" name="assigneeEmail" [(ngModel)]="assigneeEmail" required #assigneeEmailInput="ngModel">
+<div *ngIf="assigneeEmailInput.invalid && (assigneeEmailInput.dirty || taskForm.submitted)" class="error">
+  <span class="mandatory-symbol">*</span> Assignee Email is required.
+</div>
+   </div>
+        <button type="submit" class="create-btn">Create</button>
+        <button type="button" (click)="cancelCreateTask()" class="cancel-btn">Cancel</button>
+      </form>
+ </div>
+   </div>
+   
+   <!-- Update form for tasks in the "Completed" column -->
+   <div class="task-modal" *ngIf="selectedTask && selectedTask.initialState === 'completed'">
+     <form (submit)="updateTask(selectedTask)" style=" background-color: rgb(155, 210, 255); ">
+       <div class="task-info">
+         <label for="editTaskName">Task Name:</label>
+         <input type="text" id="editTaskName" name="editTaskName" [(ngModel)]="selectedTask.taskName" required #editTaskNameInput="ngModel">
+         <div *ngIf="editTaskNameInput.invalid && (editTaskNameInput.dirty || editTaskNameInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Task Name is required.
+         </div>
+         
+         <label for="editTaskDescription">Task Description:</label>
+         <input type="text" id="editTaskDescription" name="editTaskDescription" [(ngModel)]="selectedTask.taskDescription" required #editTaskDescriptionInput="ngModel">
+         <div *ngIf="editTaskDescriptionInput.invalid && (editTaskDescriptionInput.dirty || editTaskDescriptionInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Task Description is required.
+         </div>
+         
+         <label for="editTaskDeadline">Deadline:</label>
+         <input type="date" id="editTaskDeadline" name="editTaskDeadline" [(ngModel)]="taskDeadline" required [min]="minDate()" #taskDeadlineInput="ngModel">
+         <div *ngIf="taskDeadlineInput.invalid && (taskDeadlineInput.dirty || taskDeadlineInput.touched)" class="error">
+           <span class="mandatory-symbol">*</span> Deadline is required and must be after today.
+         </div>
+         
+         <label for="editAssigneeEmail">Assignee Email:</label>
+         <input type="text" id="editAssigneeEmail" name="editAssigneeEmail" [(ngModel)]="selectedTask.assigneeEmail">
+       </div>
+       <button type="submit" class="cancel-btn">Update</button>
+         <button type="button" (click)="cancelEditTask()" class="cancel-btn">Cancel</button>
+     </form>
+   </div>
+ </div>
+ 
+<!-- Archived Column -->
+<div class="column" (drop)="drop('archived', $event)" (dragover)="allowDrop($event)" style="background-color: rgb(249, 212, 218); ">
+  <h2>Archived <i class="fas fa-plus" (click)="toggleCreateTaskForm('archived')" title="Create Task"></i></h2>
+
+  <div class="tasks" *ngIf="getTasksByState('archived').length > 0">
+    <div class="task-item" *ngFor="let task of getTasksByState('archived')">
+      <div class="draggable" draggable="true" (dragstart)="drag(task, $event)">
+        <div *ngIf="task.initialState === 'archived'">
+          <div class="task-info">
+            <div class="task-name" title="Name" style="cursor:text;"><strong>{{ task.taskName }}</strong></div>
+            <div class="task-description" title="Description" style="cursor:text;">{{ task.taskDescription }}</div>
+            <div class="assignee">
+              <div>
+                <i class="fas fa-user toggle-icon" (click)="toggleAssigneeDetails()" title="Assignee"></i>
+              </div>
+              <div *ngIf="showAssigneeDetails"  title="Assignee" style="cursor:text;">{{ task.assigneeEmail }}</div>
+            </div>
+            <div class="deadline">
+              <div>
+                <i class="far fa-calendar-alt toggle-icon" (click)="toggleDeadlineDetails()" title="Deadline"></i>
+              </div>
+              <div *ngIf="showDeadlineDetails" title="Deadline" style="cursor:text;">{{ task.taskDeadline }}</div>
+            </div>
+          </div>
+          <div class="task-actions">
+           
+            <span (click)="deleteTask(task.taskId)" class="delete-icon" title="Delete Task">
+              <i class="fas fa-trash-alt"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showCreateTaskForm && currentState === 'archived'" class="modal-overlay">
+    <div class="task-modal">
+      <!-- Create task form for "Archived" state -->
+      <form #taskForm="ngForm" (submit)="createTask('archived', boardId ?? '')" style=" background-color: rgb(249, 212, 218); ">
+        <div class="task-info">
+          <label for="taskName">Task Name:</label>
+          <input type="text" id="taskName" name="taskName" [(ngModel)]="taskName" required #taskNameInput="ngModel">
+          <div *ngIf="taskNameInput.invalid && (taskNameInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Task Name is required.
+          </div>
+          
+          <label for="taskDescription">Task Description:</label>
+          <input type="text" id="taskDescription" name="taskDescription" [(ngModel)]="taskDescription" required #taskDescriptionInput="ngModel">
+          <div *ngIf="taskDescriptionInput.invalid && (taskDescriptionInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Task Description is required.
+          </div>
+          
+          <label for="taskDeadline">Deadline:</label>
+          <input type="date" id="taskDeadline" name="taskDeadline" [(ngModel)]="taskDeadline" required [min]="minDate()" #taskDeadlineInput="ngModel">
+          <div *ngIf="taskDeadlineInput.invalid && (taskDeadlineInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Deadline is required and must be after today.
+          </div>
+          
+          <label for="assigneeEmail">Assignee Email:</label>
+          <input type="text" id="assigneeEmail" name="assigneeEmail" [(ngModel)]="assigneeEmail" required #assigneeEmailInput="ngModel">
+          <div *ngIf="assigneeEmailInput.invalid && (assigneeEmailInput.dirty || taskForm.submitted)" class="error">
+            <span class="mandatory-symbol">*</span> Assignee Email is required.
+          </div>
+        </div>
+        <button type="submit" class="create-btn">Create</button>
+        <button type="button" (click)="cancelCreateTask()" class="cancel-btn">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+ </div>

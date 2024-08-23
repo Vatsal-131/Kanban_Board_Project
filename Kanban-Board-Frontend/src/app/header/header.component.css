@@ -1,0 +1,89 @@
+/* Apply styles to the header */
+header {
+  background: #14247a; /* New gradient background for header */
+  color: white; /* White text color */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  position: fixed;
+  width: 100%;
+  top: -20px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px; /* Add padding for better spacing */
+  font-family: 'Verdana', sans-serif;
+  height: 120px;
+  animation: slideDown 0.5s ease; /* Animation */
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+a {
+  padding: 20px;
+  font-family: 'Verdana', sans-serif;
+}
+p {
+  margin-left: -140px;
+  font-family: Arial, sans-serif;
+}
+
+/* Apply styles to the header content */
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+/* Apply styles to the header logo */
+.header-logo {
+  text-decoration: none; /* Remove underline from anchor tag */
+  color: white; /* Set text color */
+  font-size: 1.5rem; /* Adjust font size */
+  display: flex;
+  font-weight: bold;
+  align-items: center; /* Align the image and text vertically */
+}
+.name{
+  margin-left: 20px;
+}
+
+.header-logo img {
+  border-radius: 50%;
+  width: 60px; /* Adjust image width as needed */
+  height: 60px; /* Adjust image height as needed */
+  margin-right: 1px; /* Add margin for spacing */
+}
+
+/* Apply styles to the header actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  margin-left: 940px;
+}
+
+/* Apply styles to the action boxes */
+.action-box {
+  margin-left: 1rem;
+}
+
+/* Apply styles to the sign-in and sign-up buttons */
+.sign-in-box button,
+.sign-up-box button {
+  padding: 0.5rem 1rem;
+  background-color: #ff5722; /* Orange */
+  color: #fff;
+  border-radius: 5px;
+  border: #ff5722;
+  cursor: pointer;
+}
+.sign-in-box button:hover,
+.sign-up-box button:hover{
+  background-color: #f4511e;
+}
+

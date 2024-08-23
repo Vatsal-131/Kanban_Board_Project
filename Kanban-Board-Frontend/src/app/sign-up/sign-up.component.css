@@ -1,0 +1,190 @@
+
+  /* Apply styles to the navbar */
+
+
+  .navbar {
+    background: #14247a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    top: -20px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px; /* Add padding for better spacing */
+    font-family: 'Verdana', sans-serif;
+    height: 110px;
+    animation: slideDown 0.5s ease; /* Animation */
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .navbar-brand {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.5rem;
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+  }
+  
+  .navbar-brand img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+  
+  a {
+    padding: 20px;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #ff5722; /* Orange */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: 'Verdana', sans-serif;
+    cursor: pointer;
+    margin-right: 30px;
+  }
+  
+  button:hover {
+    background-color: #f4511e; /* Darker Orange */
+  }
+  
+  /* Apply styles to the navbar items */
+  .navbar-nav {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Apply styles to the navbar links */
+  .nav-link {
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+  }
+
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 120%;
+  width: 100%;
+  margin-top: 50px;
+  position: relative;
+  background: linear-gradient(to bottom, white, rgb(138, 212, 241));
+  max-width: 100%;
+  background-color: #87ceeb;
+  font-family: 'Verdana', sans-serif;
+}
+.signup-image{
+  opacity: 0.7;
+  margin-top: 70px;
+  height:90%;
+  width: 100%;
+  animation: zoomInOut 5s infinite alternate; /* Animation */
+}
+@keyframes zoomInOut {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1); /* Zoom in */
+  }
+  100% {
+    transform: scale(0.8); /* Zoom out */
+  }
+}
+
+.form-box {
+ margin-top: 170px;
+ margin-bottom: 100px;
+   width: 400px; /* Increase width */
+  height: auto; /* Adjust height as needed */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); /* Add shadow */
+  background-color: #cfd8dc; /* Light Grey */
+  font-family: 'Verdana', sans-serif;
+
+  position: absolute;
+}
+
+h2 {
+  text-align: center;
+  color: #ff5722; /* Orange */
+  font-size: 2rem;
+  font-family: 'Verdana', sans-serif;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: 'Verdana', sans-serif;
+}
+
+div button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff5722; /* Orange */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Verdana', sans-serif;
+}
+
+
+.alert {
+  margin-bottom: 20px;
+  font-family: 'Verdana', sans-serif;
+}
+
+.alert-danger {
+  color: red; /* Set text color to red */
+  background: none; /* Remove background */
+  border: none; /* Remove border */
+  padding: 0; /* Remove padding */
+}
+
+#signup {
+  font-weight: 500;
+  color: #ff5722; /* Orange */
+  font-family: 'Verdana', sans-serif;
+}
+
+span {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  font-family: 'Verdana', sans-serif;
+  font-size: 0.9rem;
+}
+
+a {
+  color: white;
+}
+

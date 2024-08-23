@@ -1,0 +1,82 @@
+<div class="container" >
+  
+  <nav class="navbar">  
+    <a routerLink="/dashboard" class="navbar-brand">
+      <img src="assets\logo.jpg" alt="Logo">
+      BoardifyNow
+    </a>
+    <div class="navbar-actions">
+        
+      <div class="dropdown">
+        <span *ngIf="firstName" class="navbar-firstname dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img *ngIf="profilePic" [src]="profilePic" alt="Profile Picture" class="profile-pic"> Hi {{ firstName }}
+        </span>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <ul class="my-list">
+            <li routerLink="/userdetails">
+              <mat-icon class="icon">account_circle</mat-icon> <!-- Profile Icon -->
+              <a routerLink="/userdetails">User Info</a>
+            </li>
+            <li (click)="logout()">
+              <mat-icon class="icon" (click)="logout()">power_settings_new</mat-icon> <!-- Power Icon -->
+              <span (click)="logout()">Logout</span>
+            </li> 
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="notifications.length > 0 || showNotifications" class="notification-bell" (click)="toggleNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notification-count">{{ notifications.length }}</span>
+      </div>
+      <div *ngIf="showNotifications" class="notification-dropdown">
+        <ul>
+          <li (click)="removeAllNotifications()" class="remove-all-btn" style="color: red; float: inline-end;">(Remove All)</li> <!-- Added Remove All button -->
+          <br><li *ngFor="let notification of notifications; let i = index">
+            {{ notification }}
+            <button class="remove-btn"   (click)="removeNotification(i)">Remove</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div>
+    <app-boards></app-boards>
+  </div>
+  
+ </div>
+
+
+ <div class="square" style="top: 100px; left: 320px;"></div>
+  <div class="square" style="top: 200px; left: 470px;"></div>
+  <div class="square" style="top: 100px; left: 620px;"></div>
+  <div class="square" style="top: 200px; left: 770px;"></div>
+  <div class="square" style="top: 100px; left: 920px;"></div>
+  <div class="square" style="top: 200px; left: 1070px;"></div>
+  <div class="square" style="top: 100px; left: 1220px;"></div>
+  <div class="square" style="top: 200px; left: 1370px;"></div>
+ 
+  <div class="square" style="top: 300px; left: 320px;"></div>
+  <div class="square" style="top: 400px; left: 470px;"></div>
+  <div class="square" style="top: 300px; left: 620px;"></div>
+  <div class="square" style="top: 400px; left: 770px;"></div>
+  <div class="square" style="top: 300px; left: 920px;"></div>
+  <div class="square" style="top: 400px; left: 1070px;"></div>
+  <div class="square" style="top: 300px; left: 1220px;"></div>
+  <div class="square" style="top: 400px; left: 1370px;"></div>
+
+  <div class="square" style="top: 500px; left: 320px;"></div>
+  <div class="square" style="top: 600px; left: 470px;"></div>
+  <div class="square" style="top: 500px; left: 620px;"></div>
+  <div class="square" style="top: 600px; left: 770px;"></div>
+  <div class="square" style="top: 500px; left: 920px;"></div>
+  <div class="square" style="top: 600px; left: 1070px;"></div>
+  <div class="square" style="top: 500px; left: 1220px;"></div>
+  <div class="square" style="top: 600px; left: 1370px;"></div>
+
+  <div class="square" style="top: 700px; left: 320px;"></div>
+  <div class="square" style="top: 700px; left: 620px;"></div>
+  <div class="square" style="top: 700px; left: 920px;"></div>
+  <div class="square" style="top: 700px; left: 1220px;"></div>
+
+
+  

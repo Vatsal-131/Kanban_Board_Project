@@ -1,0 +1,62 @@
+<nav class="navbar">
+  <a routerLink="/" class="navbar-brand"><img src="assets\logo.jpg" alt="Logo"> BoardifyNow</a>
+  <button routerLink="/">Home</button>
+</nav>
+
+<div class="container">
+  <div class="login-illustration">
+    <img src="assets\login_illustration.gif" alt="Login Illustration">
+  </div>
+  <div class="login-container">
+    <form class="form-box animated-form" (ngSubmit)="formSubmit()" #signinForm="ngForm">
+      <h2><b>Login</b></h2>
+      
+      <div class="form-group">
+        <label for="signinEmail"><b>Email:</b> </label>
+        <input [(ngModel)]="signinData.emailId" 
+               type="email" 
+               id="signinEmail" 
+               name="signinEmail" 
+               placeholder="Enter Email" 
+               [required]="true"
+               pattern="^(?![0-9])[a-z0-9._-]{5,}@[a-z.-]{5}\.[a-z]{2,}$"
+               #email="ngModel">
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+          <div *ngIf="email.errors?.['required']">
+            *Email is required
+          </div>
+          <div *ngIf="email.errors?.['pattern']">
+            <ng-container *ngIf="emailStartsWithDigit()">
+              *Email cannot start with a digit
+            </ng-container>
+            <ng-container *ngIf="emailStartsWithCapital()">
+              *Email cannot start with a capital letter
+            </ng-container>
+            <ng-container *ngIf="!emailStartsWithDigit() && !emailStartsWithCapital()">
+              *Please enter a valid email address
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="signinPassword"><b>Password: </b></label>
+        <input [(ngModel)]="signinData.password" 
+               type="password" 
+               id="signinPassword" 
+               name="signinPassword" 
+               placeholder="Enter Password" 
+               [required]="true"
+               #password="ngModel">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+          *Password is required
+        </div>
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <button type="submit" >Login</button>
+      <span> <b>Don't have an account? </b><a routerLink="/signup" id="signup"><b>Register</b> </a></span>
+    </form>
+  </div>
+</div>
+<app-footer></app-footer>

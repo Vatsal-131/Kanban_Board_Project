@@ -1,0 +1,98 @@
+<!-- user-details.component.html -->
+
+<body>
+
+    <nav class="navbar">
+        <a routerLink="/dashboard" class="navbar-brand">
+            <img src="assets\logo.jpg" alt="Logo">
+            BoardifyNow
+        </a>
+    
+        <div class="navbar-actions">
+            <div class="dropdown" >
+                <span *ngIf="firstName" class="navbar-firstname dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img *ngIf="profilePic" [src]="profilePic" alt="Profile Picture" class="profile-pic"> Hi {{ firstName }}
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <ul class="my-list">
+                        <li (click)="logout()">
+                            <mat-icon class="icon" (click)="logout()">power_settings_new</mat-icon> <!-- Power Icon -->
+                            <span (click)="logout()">Logout</span>
+                          </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="grid-container" >
+        <img src="assets\userinfo.webp" alt="user info Image" class="userinfo-image">
+        <div class="details-container" [class.edit-form-open]="editUserDetailsMode || editProfilePicMode">
+            <div class="user-profile-card">
+                <div class="user-profile-header">
+                    <img [src]="loggedInUser?.profilePic" alt="Profile Picture" class="profile-pic">
+                    <div class="user-details">
+                        <h2>Name: {{ loggedInUser?.firstName }} {{ loggedInUser?.lastName }}</h2>
+                        <p><b>Email ID:</b> {{ loggedInUser?.emailId }}</p>
+                        <p><b>Contact Number:</b> {{ loggedInUser?.phoneNumber }}</p>
+                    </div>
+                </div>
+                
+                <div class="user-profile-footer">
+                    <button (click)="toggleProfilePicEditMode()" class="edit-button">Edit Profile Picture</button>
+                    <button (click)="toggleUserDetailsEditMode()" class="edit-button">Edit User Details</button>
+                    
+                </div>
+                <!-- Edit User Details Section -->
+                <div *ngIf="loggedInUser && editUserDetailsMode">
+                    <div class="user-details-edit">
+                        <form (ngSubmit)="saveUserDetails()" #userDetailsForm="ngForm">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" [(ngModel)]="loggedInUser.firstName" name="firstName" required pattern="[a-zA-Z]+">
+                            <div *ngIf="userDetailsForm.controls['firstName'].errors?.['required'] && userDetailsForm.controls['firstName'].touched" style="color: red;">
+                                *First name is required
+                            </div>
+                            <div *ngIf="userDetailsForm.controls['firstName'].errors?.['pattern'] && userDetailsForm.controls['firstName'].touched" style="color: red;">
+                                *First name must contain only letters
+                            </div>
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" [(ngModel)]="loggedInUser.lastName" name="lastName" required pattern="[a-zA-Z]+">
+                            <div *ngIf="userDetailsForm.controls['lastName'].errors?.['required'] && userDetailsForm.controls['lastName'].touched" style="color: red;">
+                                *Last name is required
+                            </div>
+                            <div *ngIf="userDetailsForm.controls['lastName'].errors?.['pattern'] && userDetailsForm.controls['lastName'].touched" style="color: red;">
+                                *Last name must contain only letters
+                            </div>
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="text" id="phoneNumber" [(ngModel)]="loggedInUser.phoneNumber" name="phoneNumber" required pattern="[6-9][0-9]{9}">
+                            <div *ngIf="userDetailsForm.controls['phoneNumber'].errors?.['required'] && userDetailsForm.controls['phoneNumber'].touched" style="color: red;">
+                                *Phone number is required
+                            </div>
+                            <div *ngIf="userDetailsForm.controls['phoneNumber'].errors?.['pattern'] && userDetailsForm.controls['phoneNumber'].touched" style="color: red;">
+                                *Phone number must be 10 digits and start with 6, 7, 8, or 9
+                            </div>
+                            <button type="submit" [disabled]="!userDetailsForm.valid">Save User Details</button>
+                            <button type="button" (click)="cancelUserDetailsEdit()" class="cancelbutton">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Profile Picture Edit Section -->
+                <div *ngIf="loggedInUser && editProfilePicMode">
+                    <div class="profile-pic-edit">
+                        <form (ngSubmit)="saveProfilePic()">
+                            <label for="profilePic">Profile Picture:</label>
+                            <input type="file" id="profilePic" (change)="onProfilePicSelected($event)" accept="image/*">
+                            <img *ngIf="profileImagePreview" [src]="profileImagePreview" alt="Profile Picture Preview" class="none">
+                            <button type="submit">Save Profile Picture</button>
+                            <button type="button" (click)="cancelProfilePicEdit()" class="cancelbutton">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button routerLink="/dashboard" class="btn-danger">Back</button>
+    
+</body>
+<app-footer class="app-footer"></app-footer>

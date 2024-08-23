@@ -1,0 +1,135 @@
+<!-- sign-up.component.html -->
+<body>
+<nav class="navbar">
+  <a routerLink="/" class="navbar-brand"><img src="assets\logo.jpg" alt="Logo">
+    BoardifyNow</a>
+  <button routerLink="/">Home</button>
+</nav>
+
+<div class="container">
+  <img src="assets\signup.png" alt="Signup Image" class="signup-image">
+  <form class="form-box" #signupForm="ngForm" (ngSubmit)="FormSubmit()">
+    <h2><b>Register</b></h2>
+    
+    <div class="form-group">
+      <label for="signupFirstName"><b>First Name: </b></label>
+      <input required [(ngModel)]="user.firstName" type="text" id="signupFirstName" name="signupFirstName" placeholder="Enter First Name" #firstName="ngModel" pattern="^(?! )[A-Za-z ]+$">
+      <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+        <div *ngIf="firstName.errors?.['required']">
+          *First Name is required
+        </div>
+        <div *ngIf="containsDigits(user.firstName)">
+          *First Name cannot contain digits
+        </div>
+        <div *ngIf="containsSpecialCharacters(user.firstName)">
+          *First Name cannot contain special characters
+        </div>
+        <div *ngIf="firstName.errors?.['pattern']">
+          *First Name cannot start with a space
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="signupLastName"><b>Last Name:</b></label>
+      <input required [(ngModel)]="user.lastName" type="text" id="signupLastName" name="signupLastName" placeholder="Enter Last Name" #lastName="ngModel" pattern="^(?! )[A-Za-z ]+$">
+      <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+        <div *ngIf="containsDigits(user.lastName)">
+          *Last Name cannot contain digits
+        </div>
+        <div *ngIf="containsSpecialCharacters(user.lastName)">
+          *Last Name cannot contain special characters
+        </div>
+        <div *ngIf="lastName.errors?.['pattern']">
+          *Last Name cannot start with a space
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="signupEmail"><b>Email:</b></label>
+      <input required 
+             [(ngModel)]="user.emailId" 
+             type="email" 
+             id="signupEmail" 
+             name="signupEmail" 
+             placeholder="Enter Email" 
+             pattern="^(?![0-9])[a-z0-9._-]{5,}@[a-z.-]{5}\.[a-z]{2,}$"
+             #email="ngModel">
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+        <div *ngIf="email.errors?.['required']">
+          *Email is required
+        </div>
+        <div *ngIf="email.errors?.['pattern']">
+          <ng-container *ngIf="emailStartsWithDigit()">
+            *Email cannot start with a digit
+          </ng-container>
+          <ng-container *ngIf="emailStartsWithCapital()">
+            *Email cannot start with a capital letter
+          </ng-container>
+          <ng-container *ngIf="!emailStartsWithDigit() && !emailStartsWithCapital()">
+            *Please enter a valid email address
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="signupPassword"><b>Password:</b></label>
+      <input required 
+             [(ngModel)]="user.password" 
+             type="password" 
+             id="signupPassword" 
+             name="signupPassword" 
+             placeholder="Enter Password" 
+             minlength="8" 
+             #password="ngModel"
+             (input)="validatePassword()">
+      <div *ngIf="(password.invalid || password.dirty) && (password.touched)" class="alert alert-danger">
+        <div *ngIf="password.errors?.['required']">
+          *Password is required
+        </div>
+        <div *ngIf="password.errors?.['minlength']">
+          *Password must be at least 8 characters long
+        </div>
+        <div *ngIf="!passwordHasUppercase() && user.password">
+          *Password must contain at least one uppercase letter
+        </div>
+        <div *ngIf="!passwordHasLowercase() && user.password">
+          *Password must contain at least one lowercase letter
+        </div>
+        <div *ngIf="!passwordHasDigit() && user.password">
+          *Password must contain at least one digit
+        </div>
+        <div *ngIf="!passwordHasSpecialCharacter() && user.password">
+          *Password must contain at least one special character
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="signupPhoneNumber"><b>Phone Number:</b></label>
+      <input required 
+             [(ngModel)]="user.phoneNumber" 
+             type="text" 
+             id="signupPhoneNumber" 
+             name="signupPhoneNumber" 
+             placeholder="Enter Phone Number" 
+             #phoneNumber="ngModel"
+             pattern="[6-9][0-9]{9}">
+      <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="alert alert-danger">
+        <div *ngIf="phoneNumber.errors?.['required']">
+          *Phone Number is required
+        </div>
+        <div *ngIf="phoneNumber.errors?.['pattern']">
+          *Phone Number must start with 6, 7, 8, or 9 and contain exactly 10 digits
+        </div>
+      </div>
+    </div>
+
+    <button type="submit">Sign Up</button>
+    <span> <b>Already have an account? </b><a routerLink="/signin" id="signup"><b>Login </b></a></span>
+  </form>
+</div>
+<app-footer></app-footer></body>
+

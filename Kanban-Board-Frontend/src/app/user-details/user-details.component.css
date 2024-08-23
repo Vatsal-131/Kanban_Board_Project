@@ -1,0 +1,365 @@
+body {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  margin-top: -19px;
+  height: fit-content;
+  background-image: linear-gradient(to right, #c9d6ff, #e2c3ff);
+  background-size: 400% 400%;
+  animation: shimmerDiagonalStripes 3s ease infinite;
+  height: 1000px;
+  font-family: 'Verdana', sans-serif;
+}
+
+@keyframes shimmerDiagonalStripes {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background: #14247a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  top: -25px;
+  z-index: 1001;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  font-family: 'Verdana', sans-serif;
+  height: 100px;
+  animation: slideDown 2s ease; /* Animation */
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.navbar-brand {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  font-weight: bold;
+  align-items: center;
+}
+
+.navbar-brand img {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+a {
+  padding: 20px;
+  font-family: 'Verdana', sans-serif;
+}
+
+.navbar-brand:hover {
+  color: #fff;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+.btn-danger {
+  background-color: #007bff; /* Orange */
+    color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-left: 74%;
+  font-family: 'Verdana', sans-serif;
+  margin-bottom: 150px;
+  position: relative; /* Ensure button acts as a stacking context */
+
+}
+
+.navbar-firstname {
+  font-size: 1.2rem;
+  margin-right: 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 50px;
+  justify-content: center;
+  position: relative; /* Ensure grid container acts as a stacking context */
+  z-index: 3; /* Set a higher z-index to place it above the background animation */
+  font-family: 'Verdana', sans-serif;
+}
+
+.details-container {
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 150px;
+  position: relative;
+  z-index: 4;
+}
+
+.app-footer {
+  position: relative; /* Change position to relative */
+  bottom: 0;
+  width: 100%;
+  z-index: 5; /* Increase z-index to place it below other elements */
+}
+
+
+.user-details-container h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.user-details-container p,
+.profile-pic-container p {
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.user-details-container button,
+.profile-pic-container button {
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.cancelbutton {
+  margin-left: 10px;
+}
+
+
+
+.profile-pic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-pic-container img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.profile-pic-edit {
+  margin-top: 20px;
+}
+
+.user-details-edit label,
+.profile-pic-edit label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.user-details-edit input[type="text"],
+.profile-pic-edit input[type="file"] {
+  width: calc(100% - 22px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.user-details-edit button,
+.profile-pic-edit button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #007bff; /* Orange */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+
+.my-list {
+  list-style-type: none;
+  margin-right: 20px;
+}
+
+.profile-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 180px;
+  padding: 10px;
+  font-family: 'Verdana', sans-serif;
+  font-weight: bold;
+}
+
+.user-profile-card {
+  margin-top: 0px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.user-profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.user-profile-header img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-details h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.user-details p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.user-profile-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-button {
+  background-color:#007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #1d87f9;
+}
+
+
+.dropdown-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu li {
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+.none{
+  display: none;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu li:last-child {
+  border-bottom: none;
+}
+
+.dropdown-menu li .icon {
+  margin-right: 10px;
+}
+
+
+.userinfo-image {
+  position: relative;
+  opacity: 0.7;
+  margin-top: 110px;
+  width: 100%; /* Ensure the width spans the entire container */
+  height: 500px; /* Let the height adjust proportionally based on the width */
+  animation: zoomInOut 5s infinite alternate; /* Animation */
+}
+
+.userinfo-image.edit-mode {
+  animation: none; /* Remove animation when edit mode is active */
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1); /* Zoom in */
+  }
+}

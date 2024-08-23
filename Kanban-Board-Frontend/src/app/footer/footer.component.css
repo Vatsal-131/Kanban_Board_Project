@@ -1,0 +1,117 @@
+.footer {
+    background: rgba(6, 23, 70, 0.865);
+    color: white;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Verdana', sans-serif;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1500px;
+    margin: 0 auto;
+    font-family: 'Verdana', sans-serif;
+}
+
+.footer-logo img {
+    height: 100px;
+    width: 100px;
+    margin-left: 50px;
+    
+}
+
+h3 {
+    font-family: 'Verdana', sans-serif;
+}
+
+.footer-info {
+    flex-basis: 46%;
+}
+
+.footer-info h1 {
+    font-weight: bold;
+    margin-top: 30px;
+    padding: 0;
+    margin-left: 0;
+    font-family: 'Verdana', sans-serif;
+}
+
+.footer-links,
+.footer-contact {
+    flex-basis: 20%;
+    font-family: 'Verdana', sans-serif;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer-links ul li a:hover {
+    color: black;
+}
+
+.footer-contact p {
+    margin: 5px 0;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center; /* Center align the content horizontally */
+    align-items: center;
+}
+
+.footer-bottom p {
+    margin: 0; /* Remove default margin */
+    font-family: 'Verdana', sans-serif;
+}
+
+.social-media-icons {
+    display: flex;
+}
+
+.social-media-icons a {
+    margin-right: 10px;
+}
+
+.social-media-icons a:last-child {
+    margin-right: 0;
+}
+
+/* Default colors and size for social media icons */
+.social-media-icons a i {
+    color: #3b5998; /* Facebook blue */
+    font-size: 24px; /* Adjust the icon size as needed */
+}
+
+.social-media-icons a i.fa-twitter {
+    color: white; /* Twitter blue */
+    font-size: 24px; /* Adjust the icon size as needed */
+}
+
+.social-media-icons a i.fa-instagram {
+    color: white; /* Instagram pink */
+    font-size: 24px; /* Adjust the icon size as needed */
+    
+}
+
+.social-media-icons a i.fa-facebook{
+    color: white;
+}

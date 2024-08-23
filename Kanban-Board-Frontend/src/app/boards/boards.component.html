@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="sidebar">
+    
+    <h2 class="h2">Projects
+      <i class="fas fa-plus plus-icon"  (click)="toggleCreateBoardForm()" title="Create Board"></i> 
+    </h2>
+    
+    
+    <div *ngIf="showCreateBoardForm" class="create-board-form">
+      <form (ngSubmit)="addBoard($event)" #boardForm="ngForm">
+
+        <input type="text" [(ngModel)]="newBoard.boardTitle" name="title" placeholder="Board Title" required #titleInput="ngModel">
+        <div *ngIf="titleInput.invalid && (titleInput.dirty || boardForm.submitted)" class="error"><span class="mandatory-symbol">*</span>
+          Board Title is required.
+        </div>  
+        <button type="submit">Create</button>
+      </form>
+    </div>
+    
+    <ul class="board-list">
+      <li *ngFor="let board of boards; let i = index" (click)="selectBoard(board.boardId)" [class.selected]="selectedBoard?.boardId === board.boardId">
+        {{ board.boardTitle }}
+      </li>
+      <li routerLink="/trash"> Trash History
+        <a routerLink="/trash" title="Trash">
+          <i class="fas fa-trash-restore trash-icon" title="Trash History"></i>
+        </a>
+      </li>
+    </ul>
+   
+  </div>
+  <div class="main-content">
+    <div *ngIf="selectedBoard" class="board-details">
+      <!-- <h3>{{ selectedBoard.boardTitle }}</h3> -->
+      <div class="board-actions">
+        <span (click)="updateBoard(boards.indexOf(selectedBoard))" class="edit-icon" title="Edit Board">
+          <i class="fas fa-edit"></i>
+        </span>
+        <span (click)="deleteBoard(boards.indexOf(selectedBoard))" class="delete-icon" title="Delete Board">
+          <i class="fas fa-trash-alt"></i>
+        </span>
+      </div>
+      <!-- Task component -->
+      <app-task [boardId]="selectedBoard.boardId"></app-task>
+    </div>
+    <div *ngIf="!selectedBoard" class="empty-state">
+      <p>Select a board from the sidebar</p>
+    </div>
+  </div>
+</div>
