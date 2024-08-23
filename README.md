@@ -15,14 +15,12 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://myrepos.stackroute.niit.com/1192310_Kaushal/bej-capstone-kanban-board-project.git
+git remote add origin https://myrepos.stackroute.niit.com/1192310_Vatsal/bej-capstone-kanban-board-project.git
 git branch -M main
 git push -uf origin main
 ```
 
-## Integrate with your tools
 
-- [ ] [Set up project integrations](https://myrepos.stackroute.niit.com/1192310_Kaushal/bej-capstone-kanban-board-project/-/settings/integrations)
 
 ## Collaborate with your team
 
